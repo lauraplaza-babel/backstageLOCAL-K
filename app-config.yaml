@@ -1,9 +1,9 @@
 app:
-  title: Scaffolded Backstage App
+  title: Babel App
   baseUrl: http://localhost:3000
 
 organization:
-  name: My Company
+  name: Babel
 
 backend:
   # Used for enabling authentication, secret is shared by all backend plugins
@@ -37,11 +37,8 @@ integrations:
     - host: github.com
       # This is a Personal Access Token or PAT from GitHub. You can find out how to generate this token, and more information
       # about setting up the GitHub integration here: https://backstage.io/docs/getting-started/configuration#setting-up-a-github-integration
-      token: ${GITHUB_TOKEN}
-    ### Example for how to add your GitHub Enterprise instance using the API:
-    # - host: ghe.example.net
-    #   apiBaseUrl: https://ghe.example.net/api/v3
-    #   token: ${GHE_TOKEN}
+      token: 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
+
 
 proxy:
   ### Example for how to add a proxy endpoint for the frontend.
@@ -63,17 +60,25 @@ techdocs:
 
 auth:
   # see https://backstage.io/docs/auth/ to learn about auth providers
-  providers: {}
+  environment: development
+  providers:
+    github:
+      development:
+        clientId: eb48fbffa6ebd1211ba5
+        clientSecret: c08819372d87fcc5476a6cc556789fef39d3defb
 
 scaffolder:
-  # see https://backstage.io/docs/features/software-templates/configuration for software template options
+  defaultAuthor:
+    name: Laura Plaza  # Defaults to `Scaffolder`
+    email: laura.plaza@babelgroup.com # Defaults to `scaffolder@backstage.io`
+  defaultCommitMessage: "Commit inicial" # Defaults to 'Initial commit'
 
 catalog:
   import:
     entityFilename: catalog-info.yaml
     pullRequestBranchName: backstage-integration
   rules:
-    - allow: [Component, System, API, Resource, Location]
+    - allow: [Component, System, API, Resource, Location, Template]
   locations:
     # Local example data, file locations are relative to the backend process, typically `packages/backend`
     - type: file
@@ -92,11 +97,14 @@ catalog:
         - allow: [User, Group]
 
     ## Uncomment these lines to add more example data
-    # - type: url
-    #   target: https://github.com/backstage/backstage/blob/master/packages/catalog-model/examples/all.yaml
+    - type: url
+      target: https://github.com/backstage/backstage/blob/master/packages/catalog-model/examples/all.yaml
 
     ## Uncomment these lines to add an example org
-    # - type: url
-    #   target: https://github.com/backstage/backstage/blob/master/packages/catalog-model/examples/acme-corp.yaml
-    #   rules:
-    #     - allow: [User, Group]
+    - type: url
+      target: https://github.com/backstage/backstage/blob/master/packages/catalog-model/examples/acme-corp.yaml
+      rules:
+        - allow: [User, Group]
+
+    - type: url
+      target: template.yaml # Backstage will expect the file to be in packages/backend/template.yaml
