@@ -111,6 +111,11 @@ catalog:
       rules:
         - allow: [Template] 
 
+    - type: file
+      target: ../../softwareCatalog/intentoDocumentacion/artist-lookup-component.yaml
+      rules:
+        - allow: [Template] 
+  
     - type: url
       target: https://github.com/backstage/software-templates/blob/main/scaffolder-templates/create-react-app/template.yaml
       rules:
